@@ -1,305 +1,313 @@
-(function () {
-  'use strict';
+(function() {
+    'use strict';
 
-  angular.module('app', [
-    'angular-filters',
-    'angular-loading-bar',
-    'angular-locker',
-    'angular-intercom',
-    'angular-rickshaw',
-    'angular-stripe',
-    'cfp.hotkeys',
-    'checklist-model',
-    'debounce',
-    'ngAnimate',
-    'restangular',
-    'satellizer',
-    'ui.bootstrap',
-    'ui.gravatar',
-    'ui.router',
-    'xeditable',
+    angular.module('app', [
+            'angular-filters',
+            'angular-loading-bar',
+            'angular-locker',
+            'angular-intercom',
+            'angular-rickshaw',
+            'angular-stripe',
+            'cfp.hotkeys',
+            'checklist-model',
+            'debounce',
+            'ngAnimate',
+            'restangular',
+            'satellizer',
+            'ui.bootstrap',
+            'ui.gravatar',
+            'ui.router',
+            'xeditable',
 
-    'dialogs.main',
-    'dialogs.default-translations',
+            'dialogs.main',
+            'dialogs.default-translations',
 
-    'exceptionless',
-    'exceptionless.analytics',
-    'exceptionless.auth',
-    'exceptionless.auto-active',
-    'exceptionless.billing',
-    'exceptionless.date-filter',
-    'exceptionless.event',
-    'exceptionless.events',
-    'exceptionless.filter',
-    'exceptionless.intercom',
-    'exceptionless.loading-bar',
-    'exceptionless.notification',
-    'exceptionless.organization',
-    'exceptionless.organization-notifications',
-    'exceptionless.project',
-    'exceptionless.project-filter',
-    'exceptionless.rate-limit',
-    'exceptionless.refresh',
-    'exceptionless.release-notification',
-    'exceptionless.search-filter',
-    'exceptionless.signalr',
-    'exceptionless.stack',
-    'exceptionless.stacks',
-    'exceptionless.state',
-    'exceptionless.system-notification',
-    'exceptionless.ui-nav',
-    'exceptionless.ui-scroll',
-    'exceptionless.ui-shift',
-    'exceptionless.ui-toggle-class',
-    'exceptionless.user',
-    'app.account',
-    'app.admin',
-    'app.auth',
-    'app.config',
-    'app.event',
-    'app.organization',
-    'app.payment',
-    'app.project',
-    'app.session',
-    'app.stack',
-    'app.status'
-  ])
-  .config(function ($compileProvider, $httpProvider, $locationProvider, $stateProvider, $uiViewScrollProvider, $urlRouterProvider, dialogsProvider, gravatarServiceProvider, RestangularProvider, BASE_URL, EXCEPTIONLESS_API_KEY, $ExceptionlessClient, stripeProvider, STRIPE_PUBLISHABLE_KEY, USE_HTML5_MODE) {
-    function setRouteFilter(filterService, organizationId, projectId, type) {
-      filterService.setOrganizationId(organizationId, true);
-      filterService.setProjectId(projectId, true);
-      filterService.setEventType(type, true);
-    }
+            'exceptionless',
+            'exceptionless.translate',
+            'exceptionless.analytics',
+            'exceptionless.auth',
+            'exceptionless.auto-active',
+            'exceptionless.billing',
+            'exceptionless.date-filter',
+            'exceptionless.event',
+            'exceptionless.events',
+            'exceptionless.filter',
+            'exceptionless.intercom',
+            'exceptionless.loading-bar',
+            'exceptionless.notification',
+            'exceptionless.organization',
+            'exceptionless.organization-notifications',
+            'exceptionless.project',
+            'exceptionless.project-filter',
+            'exceptionless.rate-limit',
+            'exceptionless.refresh',
+            'exceptionless.release-notification',
+            'exceptionless.search-filter',
+            'exceptionless.signalr',
+            'exceptionless.stack',
+            'exceptionless.stacks',
+            'exceptionless.state',
+            'exceptionless.system-notification',
+            'exceptionless.ui-nav',
+            'exceptionless.ui-scroll',
+            'exceptionless.ui-shift',
+            'exceptionless.ui-toggle-class',
+            'exceptionless.user',
+            'app.account',
+            'app.admin',
+            'app.auth',
+            'app.config',
+            'app.event',
+            'app.organization',
+            'app.payment',
+            'app.project',
+            'app.session',
+            'app.stack',
+            'app.status'
+        ])
+        .config(function($compileProvider, $httpProvider, $locationProvider, $stateProvider, $uiViewScrollProvider, $urlRouterProvider, $translateProvider, dialogsProvider, gravatarServiceProvider, RestangularProvider, BASE_URL, EXCEPTIONLESS_API_KEY, $ExceptionlessClient, stripeProvider, STRIPE_PUBLISHABLE_KEY, USE_HTML5_MODE) {
+            var lang = window.localStorage.lang || 'zh-cn';
+            $translateProvider.preferredLanguage(lang);
+            $translateProvider.useStaticFilesLoader({
+                prefix: '/lang/',
+                suffix: '.json'
+            });
 
-    $compileProvider.debugInfoEnabled(false);
-    $httpProvider.useApplyAsync(true);
+            function setRouteFilter(filterService, organizationId, projectId, type) {
+                filterService.setOrganizationId(organizationId, true);
+                filterService.setProjectId(projectId, true);
+                filterService.setEventType(type, true);
+            }
 
-    if (EXCEPTIONLESS_API_KEY) {
-      var config = $ExceptionlessClient.config;
-      config.apiKey = EXCEPTIONLESS_API_KEY;
-      config.serverUrl = BASE_URL;
-      config.defaultTags.push('UI');
-      config.setVersion('@@version');
-      config.useReferenceIds();
-      config.useSessions();
-    }
+            $compileProvider.debugInfoEnabled(false);
+            $httpProvider.useApplyAsync(true);
 
-    $locationProvider.html5Mode({
-      enabled: (typeof USE_HTML5_MODE === 'boolean' && USE_HTML5_MODE) || USE_HTML5_MODE === 'true',
-      requireBase: false
-    });
+            if (EXCEPTIONLESS_API_KEY) {
+                var config = $ExceptionlessClient.config;
+                config.apiKey = EXCEPTIONLESS_API_KEY;
+                config.serverUrl = BASE_URL;
+                config.defaultTags.push('UI');
+                config.setVersion('@@version');
+                config.useReferenceIds();
+                config.useSessions();
+            }
 
-    $uiViewScrollProvider.useAnchorScroll();
+            $locationProvider.html5Mode({
+                enabled: (typeof USE_HTML5_MODE === 'boolean' && USE_HTML5_MODE) || USE_HTML5_MODE === 'true',
+                requireBase: false
+            });
 
-    dialogsProvider.setSize('md');
+            $uiViewScrollProvider.useAnchorScroll();
 
-    gravatarServiceProvider.defaults = {
-      'default': 'mm'
-    };
+            dialogsProvider.setSize('md');
 
-    RestangularProvider.setBaseUrl(BASE_URL + '/api/v2');
-    RestangularProvider.setFullResponse(true);
-    //RestangularProvider.setDefaultHttpFields({ timeout: 10 * 1000 });
+            gravatarServiceProvider.defaults = {
+                'default': 'mm'
+            };
 
-    if (!!STRIPE_PUBLISHABLE_KEY) {
-      stripeProvider.setPublishableKey(STRIPE_PUBLISHABLE_KEY);
-    }
+            RestangularProvider.setBaseUrl(BASE_URL + '/api/v2');
+            RestangularProvider.setFullResponse(true);
+            //RestangularProvider.setDefaultHttpFields({ timeout: 10 * 1000 });
 
-    $stateProvider.state('app', {
-      abstract: true,
-      templateUrl: 'app/app.tpl.html',
-      controller: 'App',
-      controllerAs: 'appVm',
-      data: {
-        requireAuthentication: true
-      }
-    });
+            if (!!STRIPE_PUBLISHABLE_KEY) {
+                stripeProvider.setPublishableKey(STRIPE_PUBLISHABLE_KEY);
+            }
 
-    var routes = [
-      { key: 'dashboard', title: 'Dashboard', controller: 'app.Dashboard' },
-      { key: 'frequent', title: 'Most Frequent', controller: 'app.Frequent' },
-      { key: 'new', title: 'New', controller: 'app.New' },
-      { key: 'recent', title: 'Most Recent', controller: 'app.Recent' },
-      { key: 'users', title: 'Most Users', controller: 'app.Users' }
-    ];
-    var resetEventTypeOnExit = ['filterService', function (filterService) { filterService.setEventType(null, true); }];
-    routes.forEach(function(route) {
-      var routeDefaults = {
-        controller: route.controller,
-        controllerAs: 'vm',
-        templateUrl: 'app/' + route.key + '.tpl.html',
-        title: route.title
-      };
+            $stateProvider.state('app', {
+                abstract: true,
+                templateUrl: 'app/app.tpl.html',
+                controller: 'App',
+                controllerAs: 'appVm',
+                data: {
+                    requireAuthentication: true
+                }
+            });
 
-      $stateProvider.state('app.' + route.key, angular.extend({}, {
-        url: '/' + route.key,
-        onEnter: ['filterService', function (filterService) {
-          setRouteFilter(filterService, null, null, null);
-        }]
-      }, routeDefaults));
+            var routes = [
+                { key: 'dashboard', title: 'Dashboard', controller: 'app.Dashboard' },
+                { key: 'frequent', title: 'Most Frequent', controller: 'app.Frequent' },
+                { key: 'new', title: 'New', controller: 'app.New' },
+                { key: 'recent', title: 'Most Recent', controller: 'app.Recent' },
+                { key: 'users', title: 'Most Users', controller: 'app.Users' }
+            ];
+            var resetEventTypeOnExit = ['filterService', function(filterService) { filterService.setEventType(null, true); }];
+            routes.forEach(function(route) {
+                var routeDefaults = {
+                    controller: route.controller,
+                    controllerAs: 'vm',
+                    templateUrl: 'app/' + route.key + '.tpl.html',
+                    title: route.title
+                };
 
-      $stateProvider.state('app.project-' + route.key, angular.extend({}, {
-        url: '/project/{projectId:[0-9a-fA-F]{24}}/' + route.key,
-        onEnter: ['$stateParams', 'filterService', function ($stateParams, filterService) {
-          setRouteFilter(filterService, null, $stateParams.projectId, null);
-        }]
-      }, routeDefaults));
+                $stateProvider.state('app.' + route.key, angular.extend({}, {
+                    url: '/' + route.key,
+                    onEnter: ['filterService', function(filterService) {
+                        setRouteFilter(filterService, null, null, null);
+                    }]
+                }, routeDefaults));
 
-      $stateProvider.state('app.project-type-'+ route.key, angular.extend({}, {
-        url: '/project/{projectId:[0-9a-fA-F]{24}}/:type/'+ route.key,
-        onEnter: ['$state', '$stateParams', 'filterService', function ($state, $stateParams, filterService) {
-          if ($stateParams.type === 'session') {
-            return $state.go('app.session-project-dashboard', $stateParams);
-          }
+                $stateProvider.state('app.project-' + route.key, angular.extend({}, {
+                    url: '/project/{projectId:[0-9a-fA-F]{24}}/' + route.key,
+                    onEnter: ['$stateParams', 'filterService', function($stateParams, filterService) {
+                        setRouteFilter(filterService, null, $stateParams.projectId, null);
+                    }]
+                }, routeDefaults));
 
-          setRouteFilter(filterService, null, $stateParams.projectId, $stateParams.type);
-        }],
-        onExit: resetEventTypeOnExit
-      }, routeDefaults));
+                $stateProvider.state('app.project-type-' + route.key, angular.extend({}, {
+                    url: '/project/{projectId:[0-9a-fA-F]{24}}/:type/' + route.key,
+                    onEnter: ['$state', '$stateParams', 'filterService', function($state, $stateParams, filterService) {
+                        if ($stateParams.type === 'session') {
+                            return $state.go('app.session-project-dashboard', $stateParams);
+                        }
 
-      $stateProvider.state('app.organization-' + route.key, angular.extend({}, {
-        url: '/organization/{organizationId:[0-9a-fA-F]{24}}/' + route.key,
-        onEnter: ['$stateParams', 'filterService', function ($stateParams, filterService) {
-          setRouteFilter(filterService, $stateParams.organizationId, null, null);
-        }]
-      }, routeDefaults));
+                        setRouteFilter(filterService, null, $stateParams.projectId, $stateParams.type);
+                    }],
+                    onExit: resetEventTypeOnExit
+                }, routeDefaults));
 
-      $stateProvider.state('app.organization-type-' + route.key, angular.extend({}, {
-        url: '/organization/{organizationId:[0-9a-fA-F]{24}}/:type/' + route.key,
-        onEnter: ['$state', '$stateParams', 'filterService', function ($state, $stateParams, filterService) {
-          if ($stateParams.type === 'session') {
-            return $state.go('app.session-organization-dashboard', $stateParams);
-          }
+                $stateProvider.state('app.organization-' + route.key, angular.extend({}, {
+                    url: '/organization/{organizationId:[0-9a-fA-F]{24}}/' + route.key,
+                    onEnter: ['$stateParams', 'filterService', function($stateParams, filterService) {
+                        setRouteFilter(filterService, $stateParams.organizationId, null, null);
+                    }]
+                }, routeDefaults));
 
-          setRouteFilter(filterService, $stateParams.organizationId, null, $stateParams.type);
-        }],
-        onExit: resetEventTypeOnExit
-      }, routeDefaults));
+                $stateProvider.state('app.organization-type-' + route.key, angular.extend({}, {
+                    url: '/organization/{organizationId:[0-9a-fA-F]{24}}/:type/' + route.key,
+                    onEnter: ['$state', '$stateParams', 'filterService', function($state, $stateParams, filterService) {
+                        if ($stateParams.type === 'session') {
+                            return $state.go('app.session-organization-dashboard', $stateParams);
+                        }
 
-      $stateProvider.state('app.type-' + route.key, angular.extend({}, {
-        url: '/type/:type/' + route.key,
-        onEnter: ['$state', '$stateParams', 'filterService', function ($state, $stateParams, filterService) {
-          if ($stateParams.type === 'session') {
-            return $state.go('app.session-dashboard', $stateParams);
-          }
+                        setRouteFilter(filterService, $stateParams.organizationId, null, $stateParams.type);
+                    }],
+                    onExit: resetEventTypeOnExit
+                }, routeDefaults));
 
-          setRouteFilter(filterService, null, null, $stateParams.type);
-        }],
-        onExit: resetEventTypeOnExit
-      }, routeDefaults));
-    });
+                $stateProvider.state('app.type-' + route.key, angular.extend({}, {
+                    url: '/type/:type/' + route.key,
+                    onEnter: ['$state', '$stateParams', 'filterService', function($state, $stateParams, filterService) {
+                        if ($stateParams.type === 'session') {
+                            return $state.go('app.session-dashboard', $stateParams);
+                        }
 
-    var onEnter = ['authService', '$location', '$state', '$timeout', function (authService, $location, $state, $timeout) {
-      if ($location.search().code){
-        return;
-      }
+                        setRouteFilter(filterService, null, null, $stateParams.type);
+                    }],
+                    onExit: resetEventTypeOnExit
+                }, routeDefaults));
+            });
 
-      return $timeout(function () {
-        if (authService.isAuthenticated()) {
-          $state.transitionTo('app.type-dashboard', {type: 'error'});
-        } else {
-          $state.transitionTo('auth.login');
-        }
-      });
-    }];
+            var onEnter = ['authService', '$location', '$state', '$timeout', function(authService, $location, $state, $timeout) {
+                if ($location.search().code) {
+                    return;
+                }
 
-    $stateProvider.state('loading', {
-      url: '',
-      template: null,
-      onEnter: onEnter
-    });
+                return $timeout(function() {
+                    if (authService.isAuthenticated()) {
+                        $state.transitionTo('app.type-dashboard', { type: 'error' });
+                    } else {
+                        $state.transitionTo('auth.login');
+                    }
+                });
+            }];
 
-    $stateProvider.state('loading-slash', {
-      url: '/',
-      template: null,
-      onEnter: onEnter
-    });
+            $stateProvider.state('loading', {
+                url: '',
+                template: null,
+                onEnter: onEnter
+            });
 
-    $stateProvider.state('otherwise', {
-      url: '*path',
-      templateUrl: 'app/not-found.tpl.html',
-      onEnter: ['$stateParams', function ($stateParams) {
-        $ExceptionlessClient.createNotFound($stateParams.path)
-          .setProperty('$stateParams', $stateParams)
-          .submit();
-      }]
-    });
-  })
-  .run(function($http, $rootScope, $state, authService, editableOptions, $location, rateLimitService, Restangular, stateService, USE_SSL, $window) {
-    if ($window.top.location.hostname !== $window.self.location.hostname){
-      $window.top.location.href = $window.self.location.href;
-    }
+            $stateProvider.state('loading-slash', {
+                url: '/',
+                template: null,
+                onEnter: onEnter
+            });
 
-    if (((typeof USE_SSL === 'boolean' && USE_SSL) || USE_SSL === 'true') && $location.protocol() !== 'https') {
-      $window.location.href = $location.absUrl().replace('http', 'https');
-    }
+            $stateProvider.state('otherwise', {
+                url: '*path',
+                templateUrl: 'app/not-found.tpl.html',
+                onEnter: ['$stateParams', function($stateParams) {
+                    $ExceptionlessClient.createNotFound($stateParams.path)
+                        .setProperty('$stateParams', $stateParams)
+                        .submit();
+                }]
+            });
+        })
+        .run(function($http, $rootScope, $state, authService, editableOptions, $location, rateLimitService, Restangular, stateService, USE_SSL, $window) {
+            if ($window.top.location.hostname !== $window.self.location.hostname) {
+                $window.top.location.href = $window.self.location.href;
+            }
 
-    editableOptions.theme = 'bs3';
-    Restangular.setErrorInterceptor(function(response, deferred, responseHandler) {
-      function handleError(response) {
-        if ($state.current.name !== 'status' && (response.status === 0 || response.status === 503)) {
-          stateService.save(['auth.', 'status']);
-          $state.go('status', { redirect: true });
-          return true;
-        }
+            if (((typeof USE_SSL === 'boolean' && USE_SSL) || USE_SSL === 'true') && $location.protocol() !== 'https') {
+                $window.location.href = $location.absUrl().replace('http', 'https');
+            }
 
-        if (response.status === 401) {
-          stateService.save(['auth.']);
-          $state.go('auth.login');
-          return true;
-        }
+            editableOptions.theme = 'bs3';
+            Restangular.setErrorInterceptor(function(response, deferred, responseHandler) {
+                function handleError(response) {
+                    if ($state.current.name !== 'status' && (response.status === 0 || response.status === 503)) {
+                        stateService.save(['auth.', 'status']);
+                        $state.go('status', { redirect: true });
+                        return true;
+                    }
 
-        if (response.status === 409) {
-          return true;
-        }
+                    if (response.status === 401) {
+                        stateService.save(['auth.']);
+                        $state.go('auth.login');
+                        return true;
+                    }
 
-        return false;
-      }
+                    if (response.status === 409) {
+                        return true;
+                    }
 
-      rateLimitService.updateFromResponseHeader(response);
-      var currentState = $state.current.name;
+                    return false;
+                }
 
-      // Preserve original behavior on 401s on the auth pages... Logout could cause a 401.
-      if (currentState && currentState.startsWith('auth.') && response.status === 401) {
-        return true;
-      }
+                rateLimitService.updateFromResponseHeader(response);
+                var currentState = $state.current.name;
 
-      // Lets retry as long as we are not on the status page.
-      if (currentState !== 'status' && (response.status === 0 || response.status === 503)) {
-        // No request interceptors will be called on the retry.
-        $http(response.config).then(responseHandler, function (response) {
-          if (!handleError(response)) {
-            deferred.reject(response);
-          }
+                // Preserve original behavior on 401s on the auth pages... Logout could cause a 401.
+                if (currentState && currentState.startsWith('auth.') && response.status === 401) {
+                    return true;
+                }
+
+                // Lets retry as long as we are not on the status page.
+                if (currentState !== 'status' && (response.status === 0 || response.status === 503)) {
+                    // No request interceptors will be called on the retry.
+                    $http(response.config).then(responseHandler, function(response) {
+                        if (!handleError(response)) {
+                            deferred.reject(response);
+                        }
+                    });
+
+                    return false;
+                }
+
+                return !handleError(response);
+            });
+
+            $rootScope.page = {
+                setTitle: function(title) {
+                    if (title) {
+                        this.title = title + ' - Exceptionless';
+                    } else {
+                        this.title = 'Exceptionless';
+                    }
+                }
+            };
+
+            $rootScope.$on('$stateChangeStart', function(event, toState) {
+                if (!toState || !toState.data || !toState.data.requireAuthentication)
+                    return;
+
+                if (!authService.isAuthenticated()) {
+                    event.preventDefault();
+                    stateService.save(['auth.']);
+                    $state.transitionTo('auth.login');
+                }
+
+                $rootScope.page.setTitle(toState.title);
+            });
         });
-
-        return false;
-      }
-
-      return !handleError(response);
-    });
-
-    $rootScope.page = {
-      setTitle: function(title) {
-        if (title) {
-          this.title = title + ' - Exceptionless';
-        } else {
-          this.title = 'Exceptionless';
-        }
-      }
-    };
-
-    $rootScope.$on('$stateChangeStart', function (event, toState) {
-      if (!toState || !toState.data || !toState.data.requireAuthentication)
-        return;
-
-      if (!authService.isAuthenticated()) {
-        event.preventDefault();
-        stateService.save(['auth.']);
-        $state.transitionTo('auth.login');
-      }
-
-      $rootScope.page.setTitle(toState.title);
-    });
-  });
 }());
