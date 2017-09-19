@@ -9,9 +9,9 @@
                 </th>
                 <th>{{'Summary'|translate}}</th>
                 <th class="percentage">{{'Users'|translate}}</th>
-                <th class="number">Count</th>
-                <th class="date hidden-xs">First</th>
-                <th class="date hidden-xs">Last</th>
+                <th class="number">{{'Count'|translate}}</th>
+                <th class="date hidden-xs">{{'First'|translate}}</th>
+                <th class="date hidden-xs">{{'Last'|translate}}</th>
             </tr>
         </thead>
         <tbody>
@@ -38,11 +38,11 @@
             <tr ng-if="vm.stacks.length === 0 || vm.loading">
                 <td class="hidden-xs"><label class="checks m-b-none"><input type="checkbox" disabled><i></i></label></td>
                 <td colspan="5" class="hidden-xs">
-                    <strong ng-if="vm.loading">Loading...</strong>
+                    <strong ng-if="vm.loading">{{'Loading...'|translate}}</strong>
                     <strong ng-if="!vm.loading">No stacks were found{{vm.hasFilter() ? ' with the current filter': ''}}.</strong>
                 </td>
                 <td colspan="3" class="visible-xs">
-                    <strong ng-if="vm.loading">Loading...</strong>
+                    <strong ng-if="vm.loading">{{'Loading...'|translate}}</strong>
                     <strong ng-if="!vm.loading">No stacks were found{{vm.hasFilter() ? ' with the current filter': ''}}.</strong>
                 </td>
             </tr>

@@ -108,7 +108,7 @@
       <span class="label label-success" ng-repeat="type in hook.event_types track by type">{{::type}}</span>
     </td>
     <td>
-      <button type="button" role="button" class="btn btn-sm" title="Delete" ng-click="vm.removeWebHook(hook)"><i class="fa fa-times"></i></button>
+      <button type="button" role="button" class="btn btn-sm" title="{{ 'Delete' | translate }}" ng-click="vm.removeWebHook(hook)"><i class="fa fa-times"></i></button>
     </td>
   </tr>
   <tr ng-if="vm.webHooks.length === 0">

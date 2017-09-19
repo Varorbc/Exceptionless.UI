@@ -11,7 +11,7 @@
                 <th class="action-xl hidden-xs">{{'User'|translate}}</th>
                 <th class="clickable" ng-class="{ 'relative-date': vm.relativeTo(), 'date': !vm.relativeTo(), 'dropup': !vm.sortByDateDescending }" ng-click="vm.toggleDateSort()">
                     <abbr title="{{vm.sortByDateDescending ? 'Sort Descending' : 'Sort Ascending'}}">
-          {{::vm.timeHeaderText}} <span class="caret"></span>
+          {{::vm.timeHeaderText|translate}} <span class="caret"></span>
         </abbr>
                 </th>
             </tr>
@@ -39,7 +39,7 @@
             <tr ng-if="vm.events.length === 0 || vm.loading">
                 <td class="hidden-xs" ng-if="vm.actions.length > 0"><label class="checks m-b-none"><input type="checkbox" disabled><i></i></label></td>
                 <td colspan="3">
-                    <strong ng-if="vm.loading">Loading...</strong>
+                    <strong ng-if="vm.loading">{{'Loading...'|translate}}</strong>
                     <strong ng-if="!vm.loading">No events were found{{vm.hasFilter() ? ' with the current filter': ''}}.</strong>
                 </td>
             </tr>

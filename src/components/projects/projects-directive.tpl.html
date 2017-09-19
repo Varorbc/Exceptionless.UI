@@ -24,7 +24,7 @@
                             <li><a ui-sref="app.project-dashboard({ projectId: project.id })"><i class="fa fa-fw fa-dashboard"></i> {{'Dashboard'|translate}}</a></li>
                             <li><a ui-sref="app.project.manage({ id: project.id })"><i class="fa fa-fw fa-edit"></i> Edit</a></li>
                             <li><a ui-sref="app.project.configure({ id: project.id })"><i class="fa fa-fw fa-cloud-download"></i> Download & Configure Client</a></li>
-                            <li><a ng-click="vm.remove(project)"><i class="fa fa-fw fa-times"></i> Delete</a></li>
+                            <li><a ng-click="vm.remove(project)"><i class="fa fa-fw fa-times"></i> {{ 'Delete' | translate }}</a></li>
                             <li class="divider"></li>
                             <li><a ui-sref="app.organization.manage({ id: project.organization_id })"><i class="fa fa-fw fa-group"></i> View Organization</a></li>
                         </ul>
@@ -33,21 +33,21 @@
             </tr>
             <tr ng-if="!vm.hasProjects() && vm.includeOrganizationName">
                 <td class="hidden-xs" colspan="5">
-                    <strong ng-if="vm.loading">Loading...</strong>
+                    <strong ng-if="vm.loading">{{'Loading...'|translate}}</strong>
                     <strong ng-if="!vm.loading">No projects were found{{vm.hasFilter ? ' with the current filter': ''}}.</strong>
                 </td>
                 <td class="visible-xs" colspan="3">
-                    <strong ng-if="vm.loading">Loading...</strong>
+                    <strong ng-if="vm.loading">{{'Loading...'|translate}}</strong>
                     <strong ng-if="!vm.loading">No projects were found{{vm.hasFilter ? ' with the current filter': ''}}.</strong>
                 </td>
             </tr>
             <tr ng-if="!vm.hasProjects() && !vm.includeOrganizationName">
                 <td class="hidden-xs" colspan="4">
-                    <strong ng-if="vm.loading">Loading...</strong>
+                    <strong ng-if="vm.loading">{{'Loading...'|translate}}</strong>
                     <strong ng-if="!vm.loading">No projects were found{{vm.hasFilter ? ' with the current filter': ''}}.</strong>
                 </td>
                 <td class="visible-xs" colspan="2">
-                    <strong ng-if="vm.loading">Loading...</strong>
+                    <strong ng-if="vm.loading">{{'Loading...'|translate}}</strong>
                     <strong ng-if="!vm.loading">No projects were found{{vm.hasFilter ? ' with the current filter': ''}}.</strong>
                 </td>
             </tr>

@@ -33,7 +33,7 @@
       </form>
       <div class="buttons" ng-show="!rowform.$visible">
         <button type="button" role="button" class="btn btn-sm btn-default" ng-click="rowform.$show()">Edit</button>
-        <button type="button" role="button" class="btn btn-sm btn-danger" title="Delete" ng-click="vm.removeConfig(conf)"><i class="fa fa-times"></i></button>
+        <button type="button" role="button" class="btn btn-sm btn-danger" title="{{ 'Delete' | translate }}" ng-click="vm.removeConfig(conf)"><i class="fa fa-times"></i></button>
       </div>
     </td>
   </tr>

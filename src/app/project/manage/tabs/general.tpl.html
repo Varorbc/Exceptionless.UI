@@ -23,8 +23,8 @@
   </div>
 
   <div class="form-group m-b-none">
-    <label>Organization Name</label>
-    <input type="text" class="form-control" placeholder="Organization Name" ng-model="vm.project.organization_name" readonly />
+    <label>{{ 'Organization Name' | translate }}</label>
+    <input type="text" class="form-control" placeholder="{{ 'Organization Name' | translate }}" ng-model="vm.project.organization_name" readonly />
   </div>
 
   <div ng-show="vm.hasMonthlyUsage">

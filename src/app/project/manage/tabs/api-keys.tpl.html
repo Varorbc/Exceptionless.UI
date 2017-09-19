@@ -27,7 +27,7 @@
       <div class="buttons" ng-show="!rowform.$visible">
         <button type="button" role="button" class="btn btn-sm btn-primary" title="Copy to Clipboard" clipboard text="token.id" on-copied="vm.copied()" supported="vm.clipboardSupported" ng-show="vm.clipboardSupported"><i class="fa fa-copy"></i></button>
         <button type="button" role="button" class="btn btn-sm btn-default hidden-xs" ng-click="rowform.$show()">Edit</button>
-        <button type="button" role="button" ng-click="vm.removeToken(token)" class="btn btn-sm btn-danger" title="Delete"><i class="fa fa-times"></i></button>
+        <button type="button" role="button" ng-click="vm.removeToken(token)" class="btn btn-sm btn-danger" title="{{ 'Delete' | translate }}"><i class="fa fa-times"></i></button>
       </div>
     </td>
   </tr>

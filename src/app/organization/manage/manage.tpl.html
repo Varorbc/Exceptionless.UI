@@ -7,12 +7,12 @@
         <div class="panel-heading"><i class="fa fa-th-list"></i> Manage {{ vm.organization.name ? 'Organization "' + vm.organization.name + '"' : 'Organization'}}</div>
         <div class="panel-body m-b-n">
           <uib-tabset class="tab-container" active="vm.activeTabIndex">
-            <uib-tab heading="General">
+            <uib-tab heading="{{ 'General' | translate }}">
               <form name="vm.organizationForm" role="form" class="form-validation">
                 <div class="form-group m-b-none">
-                  <label for="name">Organization Name</label>
+                  <label for="name">{{ 'Organization Name' | translate }}</label>
                   <div ng-class="{'input-group': !!vm.organizationForm.$pending }">
-                    <input id="name" name="name" type="text" class="form-control" placeholder="Organization Name"
+                    <input id="name" name="name" type="text" class="form-control" placeholder="{{ 'Organization Name' | translate }}"
                            ng-model="vm.organization.name"
                            ng-model-options="{ debounce: 500 }"
                            ng-change="vm.save(vm.organizationForm.$valid)"
@@ -43,10 +43,10 @@
                 <h6><em>The usage data above is refreshed periodically and may not reflect current totals.</em></h6>
               </div>
             </uib-tab>
-            <uib-tab heading="Projects">
+            <uib-tab heading="{{'Projects' | translate}}">
               <projects settings="vm.projects"></projects>
 
-              <a ui-sref="app.project.add" class="btn btn-primary" role="button">Add New Project</a>
+              <a ui-sref="app.project.add" class="btn btn-primary" role="button">{{ 'Add New Project' | translate }}</a>
             </uib-tab>
             <uib-tab heading="Users">
               <users settings="vm.users"></users>
@@ -61,15 +61,15 @@
         </div>
         <footer class="panel-footer">
           <div class="pull-right">
-            <a ui-sref="app.organization-dashboard({ organizationId: vm.organization.id })" class="btn btn-default" role="button">Go To Dashboard</a>
+            <a ui-sref="app.organization-dashboard({ organizationId: vm.organization.id })" class="btn btn-default" role="button">{{ 'Go To Dashboard' | translate }}</a>
           </div>
           <div class="btn-group">
             <button type="button" role="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
               <i class="fa fa-fw fa-remove"></i> <span class="caret"></span>
             </button>
             <ul class="dropdown-menu" role="menu">
-              <li><a ng-click="vm.leaveOrganization(appVm.user)" role="button">Leave Organization</a></li>
-              <li><a ng-click="vm.removeOrganization()" role="button">Delete Organization</a></li>
+              <li><a ng-click="vm.leaveOrganization(appVm.user)" role="button">{{ 'Leave Organization' | translate }}</a></li>
+              <li><a ng-click="vm.removeOrganization()" role="button">{{ 'Delete Organization' | translate }}</a></li>
             </ul>
           </div>
         </footer>
