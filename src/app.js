@@ -65,8 +65,9 @@
             'app.stack',
             'app.status'
         ])
-        .config(function($compileProvider, $httpProvider, $locationProvider, $stateProvider, $uiViewScrollProvider, $urlRouterProvider, $translateProvider, dialogsProvider, gravatarServiceProvider, RestangularProvider, BASE_URL, EXCEPTIONLESS_API_KEY, $ExceptionlessClient, stripeProvider, STRIPE_PUBLISHABLE_KEY, USE_HTML5_MODE) {
-            var lang = window.localStorage.lang || 'zh-cn';
+        .config(function($compileProvider, $httpProvider, $locationProvider, $stateProvider, $uiViewScrollProvider, $urlRouterProvider, $translateProvider, dialogsProvider, gravatarServiceProvider, RestangularProvider, BASE_URL, EXCEPTIONLESS_API_KEY, $ExceptionlessClient, stripeProvider, STRIPE_PUBLISHABLE_KEY, USE_HTML5_MODE,LANGUAGE) {
+            console.log(LANGUAGE);
+            var lang = window.localStorage.lang ||LANGUAGE|| 'zh-cn';
             $translateProvider.preferredLanguage(lang);
             $translateProvider.useStaticFilesLoader({
                 prefix: '/lang/',
